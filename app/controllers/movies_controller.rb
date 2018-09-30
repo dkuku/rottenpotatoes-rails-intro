@@ -13,14 +13,12 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.all_ratings
     if params[:ratings]
-      logger.debug(params[:ratings].inspect)
-      logger.debug("1111111111111111111111")
       session[:current_ratings] = params[:ratings]
       session[:sorted_by] = params[:sort] if params[:sort]
       @movies = Movie.sorted_by(session[:sorted_by]).include_ratings(session[:current_ratings])
     else
       flash.keep
-      redirect_to movies_path(ratings: @all_ratings)
+      redirect_to movies_path(ratings: session[:ratings] || @all_ratings)
     end
   end
 
