@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
       @movies = Movie.sorted_by(session[:sorted_by]).include_ratings(session[:current_ratings])
     else
       flash.keep
-      redirect_to movies_path(ratings: session[:ratings] || @all_ratings)
+      redirect_to movies_path(ratings: session[:current_ratings] || @all_ratings)
     end
   end
 
