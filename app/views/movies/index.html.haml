@@ -3,7 +3,7 @@
 
 = form_tag movies_path, method: :get, id: 'ratings_form' do
   Include:
-  - @all_ratings.each do |rating|
+  - @all_ratings.keys.each do |rating|
     = rating
     = check_box_tag "ratings[#{rating}]", "#{rating}", session[:current_ratings].include?(rating), id: "ratings_#{rating}"
   = submit_tag 'Refresh', id: 'ratings_submit'
