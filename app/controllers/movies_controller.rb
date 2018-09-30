@@ -12,8 +12,10 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
-    @current_ratings = params[:ratings]&.keys || @all_ratings
-    @movies = Movie.sorted_by(params[:sort]).include_ratings(@current_ratings)
+    session[:current_ratings] = @all_ratings unless session[:current_ratings]
+    session[:current_ratings] = params[:ratings]&.keys || session[:current_ratings]
+    session[:sorted_by] = params[:sort] if params[:sort]
+    @movies = Movie.sorted_by(session[:sorted_by]).include_ratings(session[:current_ratings])
   end
 
   def new
